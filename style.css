@@ -76,19 +76,19 @@ section {
     box-shadow: var(--box-shadow);
 }
 button {
-    padding: 10px;
+    padding: 12px;
     width: 100%;
-    background-color: #003366;
-    color: #ffffff;
+    background-color: #002244 ;
+    color: #ffffff !important;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #001f4d;
+    background-color: #001122 ;
 }
 
 .home {
@@ -388,4 +388,5 @@ footer a:hover {
     }
 
 }
+
 
