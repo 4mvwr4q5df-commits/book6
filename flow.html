@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reading Flow</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+
+
+header{
+    background:#1E3A5F;
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-area img{
+    height:50px;
+}
+
+.logo-area h2{
+    font-size:26px;
+}
+
+
+
+.navbar{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.navbar a:hover{
+    color:#FF8C42;
+}
+
+#nav-search{
+    padding:6px 10px;
+    border-radius:5px;
+    border:none;
+}
+
+.cart-container{
+    position:relative;
+    cursor:pointer;
+}
+
+.cart-container i{
+    font-size:22px;
+}
+
+#cart-counter{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+
+
+.cozy-sounds { text-align: center; margin: 20px 0; }
+.cozy-sounds button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.cozy-sounds button:hover { opacity: 0.8; }
+
+
+.completed-books { 
+    max-width: 600px; 
+    margin: 20px auto; 
+    background: #fff; 
+    padding: 15px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 5px rgba(0,0,0,0.2); 
+}
+.completed-books h3 { text-align: center; }
+.completed-books ul { list-style: none; padding: 0; }
+.completed-books li { padding: 5px 0; border-bottom: 1px solid #ccc; }
+
+
+.pictures { display: flex; justify-content: space-around; margin: 30px 0; }
+.pictures img { width: 30%; height: 200px; object-fit: cover; border-radius: 10px; }
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+footer a { 
+    color: #fff; 
+    margin: 0 10px; 
+    text-decoration: none; 
+    font-size: 20px; 
+}
+footer a:hover { 
+    color: #007BFF; 
+}
+</style>
+</head>
+<body>
+
+
+<header>
+    <div class="header-logo">
+        <img src="img/img_174900.png" alt="Readify Logo">
+        <h2>Readify</h2>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="explorer.html">Books</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="recommend.html">Recommend</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="flow.html">Flow</a>
+
+        
+        <input type="text" id="nav-search" placeholder="Search..." onkeyup="searchBooksInNav()">
+
+        
+        <div class="cart-container">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-counter">0</span>
+        </div>
+    </nav>
+</header>
+
+
+<div class="cozy-sounds">
+    <button id="playSound">Play Cozy Sound</button>
+    <button id="stopSound">Stop</button>
+    <audio id="cozyAudio" loop>
+        <source src="audio/cozy-sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+
+<div class="completed-books">
+    <h3>Completed Books</h3>
+    <form id="completedForm">
+        <input type="text" id="completedBook" placeholder="Enter book title" required>
+        <button type="submit">Add Book</button>
+    </form>
+    <ul id="completedList"></ul>
+</div>
+
+
+<div class="pictures">
+    <img src="img/clay-banks-w_qTfiPbjbg-unsplash-scaled-1.jpg" alt="Cozy Reading 1">
+    <img src="img/book-open-pages-close-up-600nw-2467818435.webp" alt="Cozy Reading 2">
+    <img src="img/1_QDprRfd1diXNjqxLciPXFQ.jpg" alt="Cozy Reading 3">
+</div>
+
+<!-- Footer -->
+<footer>
+    <p style="margin-bottom:10px;">Follow us on:</p>
+    <a href="https://www.facebook.com" target="_blank">
+        <i class="fab fa-facebook-f"></i> Facebook
+    </a>
+    <a href="https://www.instagram.com" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+    <a href="https://www.whatsapp.com" target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <a href="about.html" target="_blank">
+        <i class="fas fa-info-circle"></i> About Us
+    </a>
+    <p style="margin-top:10px; font-size:14px;">&copy; 2026 Readify. All Rights Reserved.</p>
+</footer>
+
+<script>
+// Navbar Search Function
+function searchBooksInNav() {
+    const query = document.getElementById('nav-search').value.toLowerCase();
+    const pictures = document.querySelectorAll('.pictures img');
+    pictures.forEach(img => {
+        if(img.alt.toLowerCase().includes(query)) img.style.display = 'inline-block';
+        else img.style.display = 'none';
+    });
+}
+
+// Cozy Sound
+const audio = document.getElementById('cozyAudio');
+document.getElementById('playSound').addEventListener('click', () => audio.play());
+document.getElementById('stopSound').addEventListener('click', () => audio.pause());
+
+// Completed Books
+function displayCompletedBooks() {
+    const listEl = document.getElementById('completedList');
+    listEl.innerHTML = "";
+    const books = JSON.parse(localStorage.getItem('completedBooks')) || [];
+    books.forEach(book => {
+        const li = document.createElement('li');
+        li.textContent = book;
+        listEl.appendChild(li);
+    });
+}
+
+document.getElementById('completedForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const bookTitle = document.getElementById('completedBook').value.trim();
+    if(!bookTitle) return;
+    let books = JSON.parse(localStorage.getItem('completedBooks')) || [];
+    if(!books.includes(bookTitle)){
+        books.push(bookTitle);
+        localStorage.setItem('completedBooks', JSON.stringify(books));
+    }
+    document.getElementById('completedBook').value = "";
+    displayCompletedBooks();
+});
+
+// Load completed books on page load
+displayCompletedBooks();
+</script>
+
+</body>
+</html>

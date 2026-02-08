@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Feedback Page</title>
+<style>
+
+body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; }
+h2, h3 { text-align: center; }
+form { max-width: 500px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2);}
+input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+button { background-color: #007BFF; color: #fff; border: none; cursor: pointer; }
+button:hover { background-color: #0056b3; }
+
+.feedback-wall, .predefined-feedback { max-width: 800px; margin: 40px auto; }
+.feedback-card { background: #fff; margin-bottom: 15px; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2); display: flex; align-items: flex-start; }
+.feedback-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-right: 15px; background-color: #ddd; }
+.feedback-info h4 { margin: 0 0 5px; }
+.feedback-info p { margin: 3px 0; color: #555; }
+.feedback-info .comment { font-style: italic; color: #333; margin-top: 5px; }
+
+.faq-section { max-width: 600px; margin: 40px auto; }
+.faq-item { background: #fff; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+.faq-question { padding: 15px; cursor: pointer; font-weight: bold; }
+.faq-answer { padding: 15px; display: none; border-top: 1px solid #ccc; }
+img { border-radius: 5px; background-color: #ddd; }
+
+@media(max-width: 700px){
+    .feedback-card { flex-direction: column; align-items: center; text-align: center; }
+    .feedback-card img { margin-bottom: 10px; }
+}
+</style>
+</head>
+<body>
+    
+
+<h2>Feedback Page</h2>
+
+<div class="feedback-section" style="display: flex; gap: 20px; align-items: flex-start; max-width: 900px; margin: auto;">
+    
+    <!-- Large Image on Left -->
+    <div class="feedback-image">
+        <img src="img/Adorned-Book-Stack-819x1024.jpg" alt="Books or Feedback" style="width: 400px; height: auto; border-radius: 10px;">
+    </div>
+    
+    <!-- Feedback Form on Right -->
+    <div class="feedback-form" style="flex:1;">
+        <form id="feedbackForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <input type="tel" id="phone" placeholder="Your Phone Number" required>
+            <textarea id="message" placeholder="Your Feedback" rows="5" required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+
+</div>
+
+
+<!-- Predefined 4 feedbacks -->
+<h3>People Who Gave Feedback</h3>
+<div class="predefined-feedback">
+    <!-- Person 1 -->
+    <div class="feedback-card">
+        <img src="img/woman-with-smile-her-face_97167-31377.avif" alt="Person 1">
+        <div class="feedback-info">
+            <h4>Sandra Poppy</h4>
+            <p>Email: sandra1@email.com</p>
+            <p>Phone: +94778976543</p>
+            <p class="comment">"I love this website! It’s easy to navigate and the books are amazing."</p>
+        </div>
+    </div>
+    <!-- Person 2 -->
+    <div class="feedback-card">
+        <img src="img/675ae6641cfe553ef659cc0e_FEATURE Beautiful Brown Hair, Green Eye, Stunning Female M-min.jpg" alt="Person 2">
+        <div class="feedback-info">
+            <h4>Emily Gibson</h4>
+            <p>Email: emilygibson@email.com</p>
+            <p>Phone: +94778976544</p>
+            <p class="comment">"Great selection of books and very user-friendly. Highly recommend!"</p>
+        </div>
+    </div>
+    <!-- Person 3 -->
+    <div class="feedback-card">
+        <img src="img/media_19cf7a0e582b9e8d035c48c61737cfbd1d7175db4.jpg" alt="Person 3">
+        <div class="feedback-info">
+            <h4>Simon Thompson</h4>
+            <p>Email: simon.thompson@email.com</p>
+            <p>Phone: +94778976545</p>
+            <p class="comment">"I enjoy browsing here. The search function makes finding books quick and simple."</p>
+        </div>
+    </div>
+    <!-- Person 4 -->
+    <div class="feedback-card">
+        <img src="img/wNDnc612x4ZHnHa_1734644220.png" alt="Person 4">
+        <div class="feedback-info">
+            <h4>Micheal Chales</h4>
+            <p>Email: micheal.chales@email.com</p>
+            <p>Phone: +94778976546</p>
+            <p class="comment">"The website feels very personal and welcoming. Love the book explorer!"</p>
+        </div>
+    </div>
+</div>
+
+<!-- Dynamic Feedback Wall for new submissions -->
+<div class="feedback-wall" id="feedback-wall">
+<h3>New Feedback</h3>
+<!-- Feedback will appear here -->
+</div>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+<h3>FAQ</h3>
+<div class="faq-item">
+    <div class="faq-question">How can I buy books?</div>
+    <div class="faq-answer">
+        <p>You can explore books and add them to the cart. Checkout is easy and secure.</p>
+    </div>
+</div>
+<div class="faq-item">
+    <div class="faq-question">Is my personal info safe?</div>
+    <div class="faq-answer">
+        <p>Yes, we never share your personal information with third parties.</p>
+    </div>
+</div>
+</section>
+
+<script>
+// Display feedback from localStorage
+function displayFeedback() {
+    const wall = document.getElementById('feedback-wall');
+    wall.innerHTML = '<h3>New Feedback</h3>';
+    const feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+    feedbacks.forEach(fb => {
+        const div = document.createElement('div');
+        div.classList.add('feedback-card');
+        div.innerHTML = `
+            <img src="${fb.image || 'https://via.placeholder.com/80'}" alt="${fb.name}">
+            <div class="feedback-info">
+                <h4>${fb.name}</h4>
+                <p>Email: ${fb.email}</p>
+                <p>Phone: ${fb.phone}</p>
+                <p class="comment">"${fb.message}"</p>
+            </div>
+        `;
+        wall.appendChild(div);
+    });
+}
+
+// Form Submission
+document.getElementById('feedbackForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if(!name || !email || !phone || !message){
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const feedback = { name, email, phone, message };
+    let feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+    feedbacks.push(feedback);
+    localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+
+    document.getElementById('confirmation').innerText = "Thank you for your feedback!";
+    this.reset();
+    displayFeedback();
+});
+
+// FAQ Accordion
+const questions = document.querySelectorAll('.faq-question');
+questions.forEach(q => {
+    q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        answer.style.display = answer.style.display === "block" ? "none" : "block";
+    });
+});
+
+// Show stored feedback on page load
+displayFeedback();
+</script>
+
+<!-- Font Awesome for social media icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Footer Section -->
+
+<footer style="background-color:#333; color:#fff; padding:20px 0; text-align:center;">
+    <p style="margin-bottom:10px;">Follow us on:</p>
+    <a href="https://www.facebook.com" target="_blank" style="color:#fff; margin:0 10px; text-decoration:none; font-size:20px;">
+        <i class="fab fa-facebook-f"></i> Facebook
+    </a>
+    <a href="https://www.instagram.com" target="_blank" style="color:#fff; margin:0 10px; text-decoration:none; font-size:20px;">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+    <a href="https://www.whatsapp.com" target="_blank" style="color:#fff; margin:0 10px; text-decoration:none; font-size:20px;">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <a href="about.html" target="_blank" style="color:#fff; margin:0 10px; text-decoration:none; font-size:20px;">
+        <i class="fas fa-info-circle"></i> About Us
+    </a>
+    <p style="margin-top:10px; font-size:14px;">&copy; 2026 Readify. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
+
+

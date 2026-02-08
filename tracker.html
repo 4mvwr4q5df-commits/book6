@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Readify - Reading Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+
+
+header{
+    background:#1E3A5F;
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-area img{
+    height:50px;
+}
+
+.logo-area h2{
+    font-size:26px;
+}
+
+
+
+.navbar{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.navbar a:hover{
+    color:#FF8C42;
+}
+
+#nav-search{
+    padding:6px 10px;
+    border-radius:5px;
+    border:none;
+}
+
+.cart-container{
+    position:relative;
+    cursor:pointer;
+}
+
+.cart-container i{
+    font-size:22px;
+}
+
+#cart-counter{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+section p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tracker-img {
+    display: block;
+    width: 200px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    border-radius: 8px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 25px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #28a745;
+    text-align: center;
+    color: #fff;
+    line-height: 25px;
+    transition: width 0.5s ease;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 25px 20px;
+    text-align: center;
+}
+footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 20px;
+}
+footer a:hover {
+    color: #007BFF;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo-area">
+        <img src="img/img_174900.png" alt="Readify website logo showing an open book and sunrise">
+        
+        <h1>Readify</h1>
+    </div>
+
+    <nav class="navbar">
+
+        <a href="index.html">Home</a>
+        <a href="explorer.html">Books</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="recommend.html">Recommend</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="flow.html">Flow</a>
+
+        <input type="text" id="nav-search" placeholder="Search...">
+
+        <div class="cart-container">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-counter">0</span>
+        </div>
+
+    </nav>
+
+</header>
+
+
+<section>
+<h2>Reading Progress Tracker</h2>
+
+<p>Track how much you have read from your book</p>
+
+<img src="img/book-open-pages-close-up-600nw-2467818435.webp" alt="Open book on a desk with bookshelf background representing reading progress">
+
+<div style="max-width:400px; margin:auto; text-align:center;">
+<input type="number" id="totalPages" placeholder="Total Pages">
+<input type="number" id="readPages" placeholder="Pages Read">
+<button onclick="calculateProgress()">Calculate Progress</button>
+
+<div class="progress-bar">
+<div class="progress-fill" id="progressBar">0%</div>
+</div>
+</div>
+</section>
+
+<footer>
+<p style="margin-bottom:10px;">Follow us on:</p>
+
+<a href="https://www.facebook.com" target="_blank">
+<i class="fab fa-facebook-f"></i> Facebook
+</a>
+
+<a href="https://www.instagram.com" target="_blank">
+<i class="fab fa-instagram"></i> Instagram
+</a>
+
+<a href="https://www.whatsapp.com" target="_blank">
+<i class="fab fa-whatsapp"></i> WhatsApp
+</a>
+
+<a href="about.html" target="_blank">
+<i class="fas fa-info-circle"></i> About Us
+</a>
+
+<p style="margin-top:10px; font-size:14px;">
+&copy; 2026 Readify. All Rights Reserved.
+</p>
+</footer>
+
+<script>
+function calculateProgress() {
+    let total = document.getElementById("totalPages").value;
+    let read = document.getElementById("readPages").value;
+    let bar = document.getElementById("progressBar");
+
+    if (total === "" || read === "") {
+        alert("Please enter both values");
+        return;
+    }
+
+    if (read > total) {
+        alert("Read pages cannot be more than total pages");
+        return;
+    }
+
+    let percent = Math.round((read / total) * 100);
+    bar.style.width = percent + "%";
+    bar.innerText = percent + "%";
+}
+</script>
+
+</body>
+</html>

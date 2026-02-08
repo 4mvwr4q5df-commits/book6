@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Recommendation</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+
+
+header{
+    background:#1E3A5F;
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-area img{
+    height:50px;
+}
+
+.logo-area h2{
+    font-size:26px;
+}
+
+
+
+.navbar{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.navbar a:hover{
+    color:#FF8C42;
+}
+
+#nav-search{
+    padding:6px 10px;
+    border-radius:5px;
+    border:none;
+}
+
+.cart-container{
+    position:relative;
+    cursor:pointer;
+}
+
+.cart-container i{
+    font-size:22px;
+}
+
+#cart-counter{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+
+h1, h2 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+.tracker-img {
+    width: 50%;
+    max-width: 200px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+}
+
+.header-logo img { height:50px; margin-right:10px; }
+.navbar a { margin-left:15px; text-decoration:none; color:#fff; font-weight:bold; }
+.cart-container{position:relative;cursor:pointer;}
+.cart-container i{
+    font-size:22px;
+}
+
+#cart-counter{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+section { max-width: 600px; margin: auto; }
+select, button { width: 100%; padding:10px; margin:10px 0; font-size:16px; border-radius:5px; border:1px solid #ccc; cursor:pointer; }
+button:hover { background-color:#0056b3; color:#fff; }
+#suggest { text-align:center; margin-top:20px; font-size:18px; font-weight:bold; }
+@media(max-width:700px){ select, button { width:90%; } }
+</style>
+</head>
+<body>
+
+
+
+<header>
+    <div class="header-logo">
+        <img src="img/img_174900.png" alt="Readify logo: an open book with an orange sun rising behind it and the letter R displayed on the book cover">
+        <h2>Readify</h2>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="explorer.html">Books</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="recommend.html">Recommend</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="flow.html">Flow</a>
+
+        <input type="text" id="nav-search" placeholder="Search..." onkeyup="searchBooksInNav()" style="padding:5px 10px; border-radius:5px; border:none; margin-left:15px;">
+
+    </nav>
+</header>
+
+<section>
+<h2>Random Book Recommendation</h2>
+<img src="img/Banners.png" alt="Reading Tracker Image" class="tracker-img">
+<div style="max-width:400px; margin:auto; text-align:center;">
+
+</div>
+
+<label for="genre">Select Genre:</label>
+<select id="genre">
+    <option value="Fiction">Fiction</option>
+    <option value="Fantasy">Fantasy</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+</select>
+
+<label for="length">Select Length:</label>
+<select id="length">
+    <option value="Short">Short</option>
+    <option value="Medium">Medium</option>
+    <option value="Long">Long</option>
+</select>
+
+<button onclick="randomBook()">Pick Again</button>
+
+<p id="suggest"></p>
+<button onclick="saveReadingList()" style="margin-top:10px;">Save to Reading List</button>
+</section>
+
+<script>
+// Book data
+const books = [
+    {title:"One Plus One", genre:"Fiction", length:"Medium"},
+    {title:"And Then There Was The One", genre:"Fiction", length:"Long"},
+    {title:"One By One", genre:"Fiction", length:"Medium"},
+    {title:"No One Can Know", genre:"Fiction", length:"Short"},
+    {title:"The Only One Left", genre:"Fiction", length:"Long"},
+    {title:"Little One", genre:"Fiction", length:"Short"},
+    {title:"One Blood", genre:"Fantasy", length:"Medium"},
+    {title:"One of Us Is Lying", genre:"Fiction", length:"Medium"},
+    {title:"Year One", genre:"Sci-Fi", length:"Long"},
+    {title:"One", genre:"Fiction", length:"Short"},
+    {title:"One on One", genre:"Fiction", length:"Medium"},
+    {title:"One Day", genre:"Fiction", length:"Medium"},
+];
+
+let currentBook = null;
+
+// Recommend random book
+function randomBook(){
+    const genre = document.getElementById('genre').value;
+    const length = document.getElementById('length').value;
+    const filtered = books.filter(b => b.genre===genre && b.length===length);
+    if(filtered.length===0){
+        document.getElementById('suggest').innerText = "No book found with this combination!";
+        currentBook = null;
+        return;
+    }
+    currentBook = filtered[Math.floor(Math.random()*filtered.length)];
+    document.getElementById('suggest').innerText = currentBook.title;
+}
+
+// Save to localStorage Reading List
+function saveReadingList(){
+    if(!currentBook) return alert("Pick a book first!");
+    let list = JSON.parse(localStorage.getItem('readingList')) || [];
+    if(!list.includes(currentBook.title)){
+        list.push(currentBook.title);
+        localStorage.setItem('readingList', JSON.stringify(list));
+        alert("Book saved to your Reading List!");
+    } else {
+        alert("Book already in your Reading List.");
+    }
+}
+</script>
+
+<footer style="background-color:#333; color:#fff; padding:20px 0; text-align:center;">
+<p style="margin-bottom:10px;">Follow us on:</p>
+<a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+<a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+<a href="https://www.whatsapp.com" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+<a href="about.html" target="_blank"><i class="fas fa-info-circle"></i> About Us</a>
+<p style="margin-top:10px; font-size:14px;">&copy; 2026 Readify. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
