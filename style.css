@@ -75,20 +75,19 @@ section {
     border-radius: 8px;
     box-shadow: var(--box-shadow);
 }
-.btn {
-    padding: 10px 35px;
-    background: #c65a17;
+button {
+    padding: 10px;
+    width: 100%;
+    background-color: #0056b3;
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-.btn:hover {
-    background: #9f4612;
+button:hover {
+    background-color: #003f88;
+
 }
 
 .home {
@@ -386,4 +385,5 @@ footer a:hover {
         flex-wrap: wrap;
         justify-content: center;
     }
+
 }
