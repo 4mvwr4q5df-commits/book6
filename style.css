@@ -78,16 +78,17 @@ section {
 button {
     padding: 10px;
     width: 100%;
-    background-color: #0056b3;
+    background-color: #003366;
     color: #ffffff;
     border: none;
     border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #003f88;
-
+    background-color: #001f4d;
 }
 
 .home {
@@ -387,3 +388,4 @@ footer a:hover {
     }
 
 }
+
