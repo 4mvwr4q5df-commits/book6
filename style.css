@@ -375,13 +375,17 @@ footer a:hover {
     }
 
 }
-button,
-button:focus,
-button:active,
-button:hover {
-    background: #111111 !important;
-    color: #ffffff !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
+.btn {
+    padding: 12px 28px;
+    background: #c65a17;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #9f4612;
 }
