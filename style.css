@@ -388,5 +388,19 @@ footer a:hover {
     }
 
 }
+.calc-btn {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-size: 18px !important;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    width: 100%;
+}
+
+.calc-btn:hover {
+    background-color: #111111 !important;
+}
 
 
